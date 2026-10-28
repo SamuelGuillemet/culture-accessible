@@ -15,14 +15,16 @@ const episodes = (await getCollection("episodes", ({ data }) => !data.draft))
   <p>Le site de l’association est en préparation.</p>
   <p>Merci de votre patience.</p>
 
-  <section aria-labelledby="articles-recents">
+  <section class="mt-10" aria-labelledby="articles-recents">
     <h2 id="articles-recents">Derniers articles</h2>
     {
       articles.length ? (
-        <ul>
+        <ul class="list-none space-y-4 p-0">
           {articles.map((article) => (
             <li>
-              <a href={`/articles/${article.id}/`}>{article.data.title}</a>
+              <a class="font-semibold" href={`/articles/${article.id}/`}>
+                {article.data.title}
+              </a>
               <p>{article.data.description}</p>
             </li>
           ))}
@@ -33,14 +35,16 @@ const episodes = (await getCollection("episodes", ({ data }) => !data.draft))
     }
   </section>
 
-  <section aria-labelledby="derniers-podcasts">
+  <section class="mt-10" aria-labelledby="derniers-podcasts">
     <h2 id="derniers-podcasts">Derniers podcasts et vidéos</h2>
     {
       episodes.length ? (
-        <ul>
+        <ul class="list-none space-y-4 p-0">
           {episodes.map((episode) => (
             <li>
-              <a href={`/podcasts/${episode.id}/`}>{episode.data.title}</a>
+              <a class="font-semibold" href={`/podcasts/${episode.id}/`}>
+                {episode.data.title}
+              </a>
               <p>{episode.data.description}</p>
             </li>
           ))}

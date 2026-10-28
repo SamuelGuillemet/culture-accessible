@@ -14,5 +14,8 @@
     "dist": true,
     ".astro": true,
     "tsconfig.tsbuildinfo": true
+  },
+  "files.associations": {
+    "**/styles/*.css": "tailwindcss"
   }
 }
