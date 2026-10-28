@@ -176,6 +176,9 @@ importers:
       '@astrojs/compiler-rs':
         specifier: ^0.5.2
         version: 0.5.2
+      '@astrojs/markdown-satteri':
+        specifier: 0.4.5
+        version: 0.4.5
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(vite@8.3.5(jiti@2.7.0)(yaml@2.9.1))

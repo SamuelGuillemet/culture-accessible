@@ -1,6 +1,6 @@
 # Culture accessible
 
-Socle minimal du site : Astro génère un site statique, prêt à être déployé sur Netlify.
+Site statique Astro publié sur [GitHub Pages](https://samuelguillemet.github.io/culture-accessible/).
 
 ## Développement local
 
@@ -18,7 +18,11 @@ pnpm build
 pnpm preview
 ```
 
-Netlify utilise `pnpm build`, publie `dist/` et sélectionne Node.js 24 via `netlify.toml`.
+GitHub Actions construit le site avec Node.js 24 et le publie sur GitHub Pages à chaque push sur `main` ([workflow](.github/workflows/deploy.yml)).
+
+Avant le premier push, sélectionne **Settings → Pages → Build and deployment → GitHub Actions** dans le dépôt et désactive l’auto-déploiement Netlify pour éviter de consommer un déploiement sur les deux plateformes. Le dernier site publié sur Netlify reste disponible comme solution de repli.
+
+Le workflow définit `VITE_BASE_URL` à partir du nom du dépôt, ce qui adapte le site aux URL GitHub Pages de type projet. En local, le préfixe vaut `/`. Les chemins d’images enregistrés par le CMS restent indépendants de l’hébergement (`/images/uploads/...`) ; Astro leur ajoute le préfixe au rendu, y compris pour les images dans le Markdown.
 
 ## Styles avec Tailwind CSS
 
@@ -26,16 +30,16 @@ Le projet utilise Tailwind CSS 4 avec l’intégration Vite d’Astro. Ajoute le
 
 ## Decap CMS avec Turbo
 
-Le CMS est servi à `/admin/`. Avant d’utiliser le bouton de connexion :
+Le CMS est servi à `/culture-accessible/admin/` sur le site publié. Avant d’utiliser le bouton de connexion :
 
-1. Crée une organisation Decap Turbo et connecte l’application GitHub à `SamuelGuillemet/culture-accessible`.
-2. Crée un site Turbo avec la branche `main`, le chemin de configuration `public/admin/config.yml` et l’URL d’administration `https://extraordinary-quokka-a7ebff.netlify.app/admin/`. Ajoute aussi `http://localhost:4321/admin/` pour le développement local.
-3. Copie l’identifiant UUID du site Turbo dans `turbo_site_id` dans `public/admin/config.yml`, puis pousse le changement.
+1. Connecte l’application GitHub de Decap Turbo à `SamuelGuillemet/culture-accessible`.
+2. Dans les URL d’administration du site Turbo, autorise `https://samuelguillemet.github.io/culture-accessible/admin/`. Ajoute `http://localhost:4321/culture-accessible/admin/` pour le développement local.
+3. Vérifie que le site Turbo utilise la branche `main` et le chemin de configuration `public/admin/config.yml`.
 4. Invite les éditeurs dans Turbo et attribue-leur l’accès au site.
 
 Les éditeurs se connectent avec leur compte Decap Turbo, pas leur compte GitHub. Turbo nécessite une place par éditeur ; l’offre gratuite commence avec une place. Les comptes éditeurs partagés compliquent l’attribution des modifications.
 
-Les articles et épisodes créés dans le CMS sont enregistrés dans `src/content/` et publiés sur le site au prochain déploiement Netlify. Les entrées marquées comme brouillons restent absentes du site public.
+Les articles et épisodes créés dans le CMS sont enregistrés dans `src/content/` et publiés sur le site au prochain déploiement GitHub Pages. Les entrées marquées comme brouillons restent absentes du site public.
 
 ## Widget d’accessibilité (essai)
 

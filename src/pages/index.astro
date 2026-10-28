@@ -21,7 +21,7 @@ const episodes = (await getCollection("episodes", ({ data }) => !data.draft))
       <ul class="list-none space-y-4 p-0">
         {articles.map((article) => (
           <li>
-            <a class="font-semibold" href={`/articles/${article.id}/`}>
+            <a class="font-semibold" href={`${import.meta.env.BASE_URL}articles/${article.id}/`}>
               {article.data.title}
             </a>
             <p>{article.data.description}</p>
@@ -39,7 +39,7 @@ const episodes = (await getCollection("episodes", ({ data }) => !data.draft))
       <ul class="list-none space-y-4 p-0">
         {episodes.map((episode) => (
           <li>
-            <a class="font-semibold" href={`/podcasts/${episode.id}/`}>
+            <a class="font-semibold" href={`${import.meta.env.BASE_URL}podcasts/${episode.id}/`}>
               {episode.data.title}
             </a>
             <p>{episode.data.description}</p>

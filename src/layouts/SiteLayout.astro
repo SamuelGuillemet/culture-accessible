@@ -25,14 +25,13 @@ import "../styles/global.css";
       Aller au contenu
     </a>
     <header class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-400 py-4">
-      <a class="font-bold" href="/">
-        {" "}
-        Culture accessible{" "}
+      <a class="font-bold" href={import.meta.env.BASE_URL}>
+        Culture accessible
       </a>
       <nav class="flex flex-wrap gap-4" aria-label="Navigation principale">
-        <a href="/">Accueil</a>
-        <a href="/articles/">Articles</a>
-        <a href="/podcasts/">Podcasts et vidéos</a>
+        <a href={import.meta.env.BASE_URL}>Accueil</a>
+        <a href={`${import.meta.env.BASE_URL}articles/`}>Articles</a>
+        <a href={`${import.meta.env.BASE_URL}podcasts/`}>Podcasts et vidéos</a>
       </nav>
     </header>
     <main class="min-h-[60vh] py-12" id="contenu">
