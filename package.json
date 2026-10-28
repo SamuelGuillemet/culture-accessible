@@ -4,6 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@12.15.0",
   "scripts": {
+    "astro": "astro",
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview"

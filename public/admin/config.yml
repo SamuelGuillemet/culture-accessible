@@ -1,0 +1,44 @@
+backend:
+  name: turbo-github
+  # Replace this with the site UUID from the Decap Turbo dashboard.
+  turbo_site_id: 6765129d-663d-41ae-9740-abe4e31143fb
+  branch: main
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: articles
+    label: Articles
+    label_singular: Article
+    folder: src/content/articles
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Résumé, name: description, widget: text }
+      - { label: Date de publication, name: pubDate, widget: datetime }
+      - { label: Auteur, name: author, widget: string }
+      - { label: Image, name: image, widget: image, required: false }
+      - {
+          label: Texte alternatif de l’image,
+          name: imageAlt,
+          widget: string,
+          required: false,
+        }
+      - { label: Brouillon, name: draft, widget: boolean, default: true }
+      - { label: Corps, name: body, widget: markdown }
+
+  - name: episodes
+    label: Podcasts
+    label_singular: Épisode
+    folder: src/content/episodes
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: Titre, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Date de publication, name: pubDate, widget: datetime }
+      - { label: URL YouTube, name: youtubeUrl, widget: string }
+      - { label: Brouillon, name: draft, widget: boolean, default: true }
+      - { label: Transcription, name: body, widget: markdown }
