@@ -4,8 +4,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Le site de l’association Culture accessible." } =
-  Astro.props;
+const { title, description = "Le site de l’association Culture accessible." } = Astro.props;
 
 import "../styles/global.css";
 ---
@@ -21,12 +20,15 @@ import "../styles/global.css";
   <body class="mx-auto max-w-6xl px-6">
     <a
       class="absolute left-2 top-2 translate-y-[-150%] bg-white px-4 py-2 focus:translate-y-0"
-      href="#contenu">Aller au contenu</a
+      href="#contenu"
     >
-    <header
-      class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-400 py-4"
-    >
-      <a class="font-bold" href="/">Culture accessible</a>
+      Aller au contenu
+    </a>
+    <header class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-400 py-4">
+      <a class="font-bold" href="/">
+        {" "}
+        Culture accessible{" "}
+      </a>
       <nav class="flex flex-wrap gap-4" aria-label="Navigation principale">
         <a href="/">Accueil</a>
         <a href="/articles/">Articles</a>

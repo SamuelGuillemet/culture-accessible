@@ -7,5 +7,6 @@
   "semi": true,
   "sortImports": {
     "newlinesBetween": false
-  }
+  },
+  "astro": true
 }

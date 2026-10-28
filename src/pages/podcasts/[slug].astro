@@ -18,8 +18,8 @@ const videoId =
   hostname === "youtu.be"
     ? youtubeUrl.pathname.split("/")[1]
     : hostname === "youtube.com" || hostname === "m.youtube.com"
-      ? youtubeUrl.searchParams.get("v") ??
-        youtubeUrl.pathname.match(/^\/(?:embed|shorts)\/([^/]+)/)?.[1]
+      ? (youtubeUrl.searchParams.get("v") ??
+        youtubeUrl.pathname.match(/^\/(?:embed|shorts)\/([^/]+)/)?.[1])
       : undefined;
 
 if (!videoId || !/^[\w-]{11}$/.test(videoId)) {

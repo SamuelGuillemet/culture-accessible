@@ -17,41 +17,37 @@ const episodes = (await getCollection("episodes", ({ data }) => !data.draft))
 
   <section class="mt-10" aria-labelledby="articles-recents">
     <h2 id="articles-recents">Derniers articles</h2>
-    {
-      articles.length ? (
-        <ul class="list-none space-y-4 p-0">
-          {articles.map((article) => (
-            <li>
-              <a class="font-semibold" href={`/articles/${article.id}/`}>
-                {article.data.title}
-              </a>
-              <p>{article.data.description}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Aucun article publié pour le moment.</p>
-      )
-    }
+    {articles.length ? (
+      <ul class="list-none space-y-4 p-0">
+        {articles.map((article) => (
+          <li>
+            <a class="font-semibold" href={`/articles/${article.id}/`}>
+              {article.data.title}
+            </a>
+            <p>{article.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>Aucun article publié pour le moment.</p>
+    )}
   </section>
 
   <section class="mt-10" aria-labelledby="derniers-podcasts">
     <h2 id="derniers-podcasts">Derniers podcasts et vidéos</h2>
-    {
-      episodes.length ? (
-        <ul class="list-none space-y-4 p-0">
-          {episodes.map((episode) => (
-            <li>
-              <a class="font-semibold" href={`/podcasts/${episode.id}/`}>
-                {episode.data.title}
-              </a>
-              <p>{episode.data.description}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Aucun podcast publié pour le moment.</p>
-      )
-    }
+    {episodes.length ? (
+      <ul class="list-none space-y-4 p-0">
+        {episodes.map((episode) => (
+          <li>
+            <a class="font-semibold" href={`/podcasts/${episode.id}/`}>
+              {episode.data.title}
+            </a>
+            <p>{episode.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p>Aucun podcast publié pour le moment.</p>
+    )}
   </section>
 </SiteLayout>

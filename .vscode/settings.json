@@ -17,5 +17,8 @@
   },
   "files.associations": {
     "**/styles/*.css": "tailwindcss"
+  },
+  "[astro]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   }
 }
