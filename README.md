@@ -22,7 +22,7 @@ GitHub Actions construit le site avec Node.js 24 et le publie sur GitHub Pages �
 
 Avant le premier push, sélectionne **Settings → Pages → Build and deployment → GitHub Actions** dans le dépôt et désactive l’auto-déploiement Netlify pour éviter de consommer un déploiement sur les deux plateformes. Le dernier site publié sur Netlify reste disponible comme solution de repli.
 
-Le workflow définit `VITE_BASE_URL` à partir du nom du dépôt, ce qui adapte le site aux URL GitHub Pages de type projet. En local, le préfixe vaut `/`. Les chemins d’images enregistrés par le CMS restent indépendants de l’hébergement (`/images/uploads/...`) ; Astro leur ajoute le préfixe au rendu, y compris pour les images dans le Markdown.
+Le workflow définit `VITE_BASE_URL` à partir du nom du dépôt, ce qui adapte le site aux URL GitHub Pages de type projet. En local, le préfixe vaut `/`. Un script dans `public/admin/index.html` ajoute le préfixe du site au `src` des images `/images/uploads/...`, dans le panneau d’édition Decap comme dans son iframe d’aperçu. La configuration `public/admin/config.yml` et les chemins d’images enregistrés restent inchangés.
 
 ## Styles avec Tailwind CSS
 

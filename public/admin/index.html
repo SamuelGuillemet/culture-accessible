@@ -6,6 +6,64 @@
     <title>Administration — Culture accessible</title>
   </head>
   <body>
+    <script>
+      const siteBase = new URL("../", window.location.href).pathname;
+      const observedFrames = new WeakSet();
+      const observedDocuments = new WeakSet();
+
+      const updateImage = (image) => {
+        const src = image.getAttribute("src");
+        if (siteBase !== "/" && src?.startsWith("/images/uploads/")) {
+          image.setAttribute("src", `${siteBase}${src.slice(1)}`);
+        }
+      };
+
+      const observeDocument = (previewDocument) => {
+        if (!previewDocument?.documentElement || observedDocuments.has(previewDocument)) return;
+        observedDocuments.add(previewDocument);
+
+        const updateImages = (node) => {
+          if (node.nodeType !== Node.ELEMENT_NODE) return;
+          if (node.matches("img")) updateImage(node);
+          node.querySelectorAll("img").forEach(updateImage);
+          observeFrames(node);
+        };
+        const observer = new MutationObserver((mutations) => {
+          for (const mutation of mutations) {
+            if (mutation.type === "attributes") {
+              updateImage(mutation.target);
+            } else {
+              mutation.addedNodes.forEach(updateImages);
+            }
+          }
+        });
+
+        observer.observe(previewDocument.documentElement, {
+          subtree: true,
+          childList: true,
+          attributes: true,
+          attributeFilter: ["src"],
+        });
+        updateImages(previewDocument.documentElement);
+      };
+
+      const observePreviewFrame = (frame) => {
+        if (!observedFrames.has(frame)) {
+          observedFrames.add(frame);
+          frame.addEventListener("load", () => observePreviewFrame(frame));
+        }
+
+        observeDocument(frame.contentDocument);
+      };
+
+      const observeFrames = (node) => {
+        if (node.nodeType !== Node.ELEMENT_NODE) return;
+        if (node.matches("iframe")) observePreviewFrame(node);
+        node.querySelectorAll("iframe").forEach(observePreviewFrame);
+      };
+
+      observeDocument(document);
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.17.3/dist/decap-cms.js"></script>
   </body>
 </html>
