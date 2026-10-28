@@ -14,14 +14,14 @@ Le site est généré par Astro en HTML statique. Les contenus sont stockés dan
 
 ## 2. Architecture cible
 
-| Brique                       | Rôle                                                                                                                                            |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Bénévoles                    | Accèdent à `https://votre-domaine.fr/admin/` avec un compte Decap Turbo et rédigent les articles et épisodes.                                   |
-| Decap CMS                    | Interface de saisie, gestion des médias, brouillons et publication sur GitHub via Turbo.                                                       |
-| Backend/authentification CMS | Decap Turbo authentifie les contributeurs et relaie les modifications au dépôt ; les éditeurs n’ont pas besoin d’un compte GitHub.             |
-| GitHub                       | Dépôt privé conseillé pour le code et les contenus légers ; historique et contrôle des changements.                                             |
-| Netlify                      | Build Astro et publication du dossier `dist/` à chaque push sur la branche de production.                                                       |
-| Visiteurs                    | Reçoivent des pages statiques via CDN HTTPS ; aucun serveur applicatif n’est requis pour les pages publiques.                                   |
+| Brique                       | Rôle                                                                                                                               |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| Bénévoles                    | Accèdent à `https://votre-domaine.fr/admin/` avec un compte Decap Turbo et rédigent les articles et épisodes.                      |
+| Decap CMS                    | Interface de saisie, gestion des médias, brouillons et publication sur GitHub via Turbo.                                           |
+| Backend/authentification CMS | Decap Turbo authentifie les contributeurs et relaie les modifications au dépôt ; les éditeurs n’ont pas besoin d’un compte GitHub. |
+| GitHub                       | Dépôt privé conseillé pour le code et les contenus légers ; historique et contrôle des changements.                                |
+| Netlify                      | Build Astro et publication du dossier `dist/` à chaque push sur la branche de production.                                          |
+| Visiteurs                    | Reçoivent des pages statiques via CDN HTTPS ; aucun serveur applicatif n’est requis pour les pages publiques.                      |
 
 ## 3. Stack retenue
 
@@ -100,11 +100,11 @@ Exemple de `netlify.toml` :
 
 ```toml
 [build]
-  command = "pnpm build"
-  publish = "dist"
+command = "pnpm build"
+publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "24"
+NODE_VERSION = "24"
 ```
 
 Vérifie la version Node recommandée par la version d’Astro choisie et la configuration Netlify courante.

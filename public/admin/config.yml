@@ -1,6 +1,5 @@
 backend:
   name: turbo-github
-  # Replace this with the site UUID from the Decap Turbo dashboard.
   turbo_site_id: 6765129d-663d-41ae-9740-abe4e31143fb
   branch: main
 
@@ -20,12 +19,7 @@ collections:
       - { label: Date de publication, name: pubDate, widget: datetime }
       - { label: Auteur, name: author, widget: string }
       - { label: Image, name: image, widget: image, required: false }
-      - {
-          label: Texte alternatif de l’image,
-          name: imageAlt,
-          widget: string,
-          required: false,
-        }
+      - { label: Texte alternatif de l’image, name: imageAlt, widget: string, required: false }
       - { label: Brouillon, name: draft, widget: boolean, default: true }
       - { label: Corps, name: body, widget: markdown }
 
