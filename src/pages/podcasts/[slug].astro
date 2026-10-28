@@ -12,6 +12,19 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const youtubeUrl = new URL(entry.data.youtubeUrl);
+const hostname = youtubeUrl.hostname.replace(/^www\./, "");
+const videoId =
+  hostname === "youtu.be"
+    ? youtubeUrl.pathname.split("/")[1]
+    : hostname === "youtube.com" || hostname === "m.youtube.com"
+      ? youtubeUrl.searchParams.get("v") ??
+        youtubeUrl.pathname.match(/^\/(?:embed|shorts)\/([^/]+)/)?.[1]
+      : undefined;
+
+if (!videoId || !/^[\w-]{11}$/.test(videoId)) {
+  throw new Error(`Invalid YouTube video URL for episode "${entry.id}".`);
+}
 ---
 
 <SiteLayout title={entry.data.title} description={entry.data.description}>
@@ -26,14 +39,39 @@ const { Content } = await render(entry);
         })}
       </time>
     </p>
+    <div class="video-player">
+      <iframe
+        src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+        title={`${entry.data.title} — lecteur vidéo YouTube`}
+        loading="lazy"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </div>
     <p>
       <a href={entry.data.youtubeUrl} rel="noreferrer">
-        Écouter ou regarder cet épisode sur YouTube
+        Ouvrir cette vidéo sur YouTube
       </a>
     </p>
-    <section aria-labelledby="transcription">
-      <h2 id="transcription">Transcription</h2>
+    <section aria-labelledby="notes">
+      <h2 id="notes">Notes et transcription</h2>
       <Content />
     </section>
   </article>
 </SiteLayout>
+
+<style>
+  .video-player {
+    width: 100%;
+    max-width: 56rem;
+    aspect-ratio: 16 / 9;
+    margin-block: 1.5rem;
+  }
+
+  .video-player iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

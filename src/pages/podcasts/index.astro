@@ -6,8 +6,8 @@ const episodes = (await getCollection("episodes", ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<SiteLayout title="Podcasts">
-  <h1>Podcasts</h1>
+<SiteLayout title="Podcasts et vidéos">
+  <h1>Podcasts et vidéos</h1>
   {
     episodes.length ? (
       <ul>

@@ -24,8 +24,8 @@ collections:
       - { label: Corps, name: body, widget: markdown }
 
   - name: episodes
-    label: Podcasts
-    label_singular: Épisode
+    label: Podcasts et vidéos
+    label_singular: Ressource audio ou vidéo
     folder: src/content/episodes
     create: true
     slug: "{{slug}}"
@@ -35,4 +35,4 @@ collections:
       - { label: Date de publication, name: pubDate, widget: datetime }
       - { label: URL YouTube, name: youtubeUrl, widget: string }
       - { label: Brouillon, name: draft, widget: boolean, default: true }
-      - { label: Transcription, name: body, widget: markdown }
+      - { label: Notes et transcription, name: body, widget: markdown }
