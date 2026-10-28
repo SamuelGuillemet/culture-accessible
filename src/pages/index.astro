@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Culture accessible — le site de l’association."
+    />
+    <title>Culture accessible</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <header>
+      <a class="site-name" href="/">Culture accessible</a>
+      <nav aria-label="Navigation principale">
+        <a href="/">Accueil</a>
+      </nav>
+    </header>
+    <main id="contenu">
+      <h1>Culture accessible</h1>
+      <p>Le site de l’association est en préparation.</p>
+    </main>
+    <footer>
+      <p>Culture accessible</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(body) {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    color: #17212b;
+    background: #fff;
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  header,
+  footer {
+    padding-block: 1rem;
+    border-bottom: 1px solid #687782;
+  }
+
+  footer {
+    border-top: 1px solid #687782;
+    border-bottom: 0;
+  }
+
+  nav {
+    display: inline-flex;
+    gap: 1rem;
+    margin-left: 1.5rem;
+  }
+
+  a {
+    color: #064b79;
+  }
+
+  a:focus-visible {
+    outline: 3px solid #a34a00;
+    outline-offset: 3px;
+  }
+
+  .site-name {
+    font-weight: 700;
+  }
+
+  .skip-link {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #fff;
+    transform: translateY(-150%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  main {
+    min-height: 60vh;
+    padding-block: 3rem;
+  }
+</style>
