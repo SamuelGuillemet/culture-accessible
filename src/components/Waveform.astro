@@ -16,47 +16,77 @@ const next = () => {
   state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
   return state / 4294967296;
 };
-const heights = Array.from({ length: bars }, (_, i) => {
-  const envelope = Math.sin((Math.PI * (i + 0.5)) / bars);
-  return Math.round(8 + 80 * (0.25 + 0.75 * next()) * (0.45 + 0.55 * envelope));
+const count = Math.max(4, Math.min(120, Math.floor(bars)));
+const raw = Array.from({ length: count }, () => next());
+// Lissage des voisins: évite les pics isolés et donne une forme de voix plus naturelle.
+const items = raw.map((_, i) => {
+  const smooth = (raw[i - 1] ?? raw[i]) * 0.25 + raw[i] * 0.5 + (raw[i + 1] ?? raw[i]) * 0.25;
+  const envelope = 0.35 + 0.65 * Math.sin((Math.PI * (i + 0.5)) / count) ** 0.7;
+  return {
+    height: Math.min(
+      100,
+      Math.round(28 + 72 * (0.3 + 0.7 * smooth) * (0.6 + 0.4 * envelope) * 1.15),
+    ),
+    duration: (1.6 + next() * 0.7).toFixed(2),
+    low: (0.3 + next() * 0.3).toFixed(2),
+  };
 });
 ---
 
-<svg
+<div
   class:list={["waveform", animated && "waveform-animated", className]}
   style={`--bar:${barWidth}px`}
-  viewBox={`0 0 ${bars * 10} 100`}
-  preserveAspectRatio="none"
+  data-dense={count > 32 ? "" : undefined}
   aria-hidden="true"
-  focusable="false"
 >
-  {heights.map((h, i) => (
-    <line x1={i * 10 + 5} x2={i * 10 + 5} y1={50 - h / 2} y2={50 + h / 2} style={`--i:${i}`} />
+  {items.map((item, i) => (
+    <span style={`--h:${item.height}%;--d:${item.duration}s;--lo:${item.low};--i:${i}`} />
   ))}
-</svg>
+</div>
 
 <style>
   .waveform {
-    display: block;
-    overflow: visible;
-    stroke: currentColor;
-    stroke-width: var(--bar);
-    stroke-linecap: round;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3px;
+    min-width: 0;
+    container-type: inline-size;
   }
-  .waveform line {
-    vector-effect: non-scaling-stroke;
-    transform-box: fill-box;
-    transform-origin: center;
+  .waveform > span {
+    flex: 1 1 0;
+    min-width: 3px;
+    max-width: var(--bar);
+    height: var(--h);
+    border-radius: 9999px;
+    background: currentColor;
+  }
+  /* Les formes denses perdent des barres quand la place manque. */
+  @container (max-width: 1100px) {
+    .waveform[data-dense] > span:nth-child(even) {
+      display: none;
+    }
+  }
+  @container (max-width: 520px) {
+    .waveform[data-dense] > span:nth-child(4n + 3) {
+      display: none;
+    }
   }
   @media (prefers-reduced-motion: no-preference) {
-    .waveform-animated line {
-      animation: wave-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-      animation-delay: calc(var(--i) * 28ms);
+    .waveform-animated > span {
+      animation:
+        wave-in 800ms cubic-bezier(0.2, 0.8, 0.2, 1) calc(var(--i) * 14ms) both,
+        wave-breathe var(--d) ease-in-out calc(var(--i) * 14ms) infinite;
     }
   }
   @keyframes wave-in {
     from {
       transform: scaleY(0.05);
+    }
+  }
+  @keyframes wave-breathe {
+    50% {
+      transform: scaleY(var(--lo));
     }
   }
 </style>

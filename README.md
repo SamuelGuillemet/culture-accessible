@@ -18,6 +18,43 @@ pnpm build
 pnpm preview
 ```
 
+## Tests d’accessibilité
+
+Les tests Playwright et axe-core analysent toutes les pages HTML publiées (hors interface du CMS),
+aux formats bureau et 320 px. Ils vérifient les règles WCAG 2.0/2.1/2.2 des niveaux A, AA et AAA
+détectables automatiquement, les bonnes pratiques et l’absence de défilement horizontal à 320 px.
+Ils testent aussi au clavier le lien d’évitement vers le contenu.
+
+Pour les exécuter localement, installe Chromium une première fois puis lance :
+
+```sh
+pnpm test:a11y:install
+pnpm test:a11y
+```
+
+Pour ouvrir Playwright UI en local, lancer les tests individuellement, voir leurs résultats et les
+relancer :
+
+```sh
+pnpm test:a11y:ui
+```
+
+Cette interface est destinée au développement local ; la CI continue d’utiliser `pnpm test:a11y`.
+
+La même suite s’exécute sur chaque pull request et push sur `main`. Le rapport Playwright est
+conservé comme artefact GitHub Actions. L’analyse vérifie les éléments intégrés eux-mêmes, mais pas
+le contenu interne des iframes tierces.
+
+Avant une mise en ligne, compléter manuellement ces vérifications :
+
+- parcourir les pages et activer les lecteurs au clavier seulement ;
+- vérifier les pages avec NVDA ou VoiceOver, y compris les lecteurs et annonces de statut ;
+- zoomer à 200 % et 400 %, et vérifier l’absence de perte de contenu ou de défilement horizontal ;
+- contrôler les sous-titres/transcriptions des médias et le formulaire Google intégré ou sa version
+  externe.
+
+Les tests automatisés ne remplacent pas une évaluation complète de conformité.
+
 GitHub Actions construit le site avec Node.js 24 et le publie sur GitHub Pages à chaque push sur `main` ([workflow](.github/workflows/deploy.yml)).
 
 Avant le premier push, sélectionne **Settings → Pages → Build and deployment → GitHub Actions** dans le dépôt et désactive l’auto-déploiement Netlify pour éviter de consommer un déploiement sur les deux plateformes. Le dernier site publié sur Netlify reste disponible comme solution de repli.

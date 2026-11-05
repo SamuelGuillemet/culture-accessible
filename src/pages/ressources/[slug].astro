@@ -41,7 +41,7 @@ const extractTitle = episode ? `${title} (extrait de ${episode.data.title})` : t
       </div>
     </header>
 
-    <div class="mx-auto grid max-w-6xl gap-14 px-6 py-14">
+    <div class="mx-auto grid grid-cols-1 max-w-6xl gap-14 px-6 py-14">
       {episode?.data.spotifyId && (
         <section aria-labelledby="extrait" class="max-w-3xl">
           <h2 id="extrait" class="m-0 mb-5 text-2xl sm:text-3xl">
@@ -61,7 +61,7 @@ const extractTitle = episode ? `${title} (extrait de ${episode.data.title})` : t
         </h2>
         {imageUrl && (
           <img
-            class="mb-8 max-w-xl rounded-2xl border-2 border-black"
+            class="mb-8 w-full max-w-xl rounded-2xl border-2 border-black"
             src={imageUrl}
             alt={imageAlt ?? ""}
           />
