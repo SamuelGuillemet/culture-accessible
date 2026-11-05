@@ -32,11 +32,7 @@ const resources = (await getCollection("resources", ({ data }) => !data.draft))
         <a class="btn btn-light" href={href("contact/")}>
           Proposer un sujet ou participer
         </a>
-        <a
-          class="btn border-white bg-transparent text-white"
-          style="box-shadow: 0.25rem 0.25rem 0 #000"
-          href={href("podcasts/")}
-        >
+        <a class="btn btn-transparent" href={href("podcasts/")}>
           Écouter les épisodes
         </a>
       </p>

@@ -16,6 +16,7 @@
 
 @theme {
   --color-brand: #6b1fad;
+  --color-brand-deep: #2e0b4d;
   --color-sky: #c2dcff;
   --color-mist: #f3f8ff;
 
@@ -46,7 +47,7 @@
     @apply decoration-[3px];
   }
 
-  :focus-visible {
+  *:focus-visible:not(#contenu) {
     outline: 3px solid #000;
     outline-offset: 3px;
     box-shadow: 0 0 0 6px #fff;
@@ -54,7 +55,7 @@
   }
 
   ::selection {
-    @apply bg-brand text-white;
+    @apply bg-brand-deep text-white;
   }
 
   .on-dark :focus-visible {
@@ -92,6 +93,10 @@
 
   .btn-light {
     @apply bg-sky text-black;
+  }
+
+  .btn-transparent {
+    @apply border-white bg-transparent text-white;
   }
 
   .btn:focus-visible {
