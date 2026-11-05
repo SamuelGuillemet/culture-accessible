@@ -166,6 +166,9 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/lexend':
+        specifier: ^5.3.0
+        version: 5.3.0
       accessibility-widgets:
         specifier: 2.0.14
         version: 2.0.14
@@ -371,6 +374,9 @@ packages:
 
   '@emnapi/wasi-threads@1.2.3':
     resolution: {integrity: sha512-ELEBe8PsLvvJ6QMr0zLt8ffvOHW/dc1m3CEzNMg7aJUv3bMaoDtw2TXyDAwkYBuroxxuHEwhRTLJSe5sya547g==}
+
+  '@fontsource-variable/lexend@5.3.0':
+    resolution: {integrity: sha512-3SXtiZ8rFbT0oaPzEboCG5RM3jtyhpNxandh1jWNLqvrJRfV/eP3R+GGw+o5e3hS1uqmAGutKxSvaWG5oyrimA==}
 
   '@img/colour@1.1.0':
     resolution: {integrity: sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==}
@@ -1927,6 +1933,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
     optional: true
+
+  '@fontsource-variable/lexend@5.3.0': {}
 
   '@img/colour@1.1.0':
     optional: true

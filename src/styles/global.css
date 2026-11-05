@@ -1,56 +1,137 @@
 @import "tailwindcss";
+@import "@fontsource-variable/lexend";
+
+@theme {
+  --color-brand: #6b1fad;
+  --color-brand-deep: #2e0b4d;
+  --color-sky: #c2dcff;
+  --color-mist: #f3f8ff;
+
+  /* Glacial Indifference est la police de la charte ; Lexend sert de relais lisible tant que ses fichiers ne sont pas ajoutés. */
+  --font-sans: "Glacial Indifference", "Lexend Variable", ui-sans-serif, system-ui, sans-serif;
+}
 
 @layer base {
+  html {
+    scroll-padding-top: 1rem;
+  }
+
   body {
-    @apply bg-white font-sans leading-relaxed text-slate-900;
+    @apply bg-mist font-sans text-lg leading-relaxed text-black;
   }
 
-  h1 {
-    @apply mb-6 text-3xl font-bold tracking-tight sm:text-4xl;
-  }
-
-  h2 {
-    @apply mb-4 mt-10 text-2xl font-bold tracking-tight;
-  }
-
+  h1,
+  h2,
   h3 {
-    @apply mb-3 mt-8 text-xl font-semibold;
-  }
-
-  p {
-    @apply my-4;
+    @apply font-bold leading-tight tracking-tight text-balance;
   }
 
   a {
-    @apply text-sky-900 underline underline-offset-2;
+    @apply text-brand underline decoration-2 underline-offset-4;
   }
 
-  a:focus-visible {
-    @apply rounded-sm outline-3 outline-offset-3 outline-amber-700;
+  a:hover {
+    @apply decoration-[3px];
   }
 
-  ul {
-    @apply my-4 list-disc pl-6;
+  :focus-visible {
+    outline: 3px solid #000;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px #fff;
+    border-radius: 0.25rem;
   }
 
-  ol {
-    @apply my-4 list-decimal pl-6;
+  ::selection {
+    @apply bg-brand text-white;
   }
 
-  img {
-    @apply h-auto max-w-full;
+  .on-dark :focus-visible {
+    outline-color: #fff;
+    box-shadow: 0 0 0 6px #000;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-black px-6 py-2.5 text-center font-bold no-underline;
+    box-shadow: 0.25rem 0.25rem 0 #000;
+    transition:
+      transform 120ms,
+      box-shadow 120ms;
   }
 
-  blockquote {
-    @apply my-6 border-l-4 border-slate-400 pl-4;
+  .btn:hover {
+    transform: translate(-0.125rem, -0.125rem);
+    box-shadow: 0.375rem 0.375rem 0 #000;
   }
 
-  table {
-    @apply my-6 w-full border-collapse;
+  .btn:active {
+    transform: translate(0.125rem, 0.125rem);
+    box-shadow: 0 0 0 #000;
   }
 
-  th,
-  td {
-    @apply border border-slate-400 p-2 text-left;
+  .btn:disabled {
+    @apply cursor-wait opacity-70;
+  }
+
+  .btn-primary {
+    @apply bg-brand text-white;
+  }
+
+  .btn-light {
+    @apply bg-sky text-black;
+  }
+
+  .btn:focus-visible {
+    border-radius: 9999px;
+  }
+
+  .tag {
+    @apply inline-block rounded-md bg-black px-2.5 py-0.5 text-base font-bold text-white;
+  }
+
+  .prose {
+    @apply max-w-prose;
+  }
+
+  .prose > * + * {
+    @apply mt-5;
+  }
+
+  .prose h2 {
+    @apply mt-10 text-2xl sm:text-3xl;
+  }
+
+  .prose h3 {
+    @apply mt-8 text-xl;
+  }
+
+  .prose ul {
+    @apply list-disc pl-6;
+  }
+
+  .prose ol {
+    @apply list-decimal pl-6;
+  }
+
+  .prose li + li {
+    @apply mt-2;
+  }
+
+  .prose img {
+    @apply h-auto max-w-full rounded-2xl border-2 border-black;
+  }
+
+  .prose blockquote {
+    @apply border-l-8 border-brand pl-5 font-medium;
+  }
+
+  .prose table {
+    @apply w-full border-collapse;
+  }
+
+  .prose th,
+  .prose td {
+    @apply border-2 border-black p-2 text-left;
   }
 }
