@@ -122,6 +122,15 @@ collections:
           required: false,
           hint: "Exemple : 1 min 30 s s’écrit 90.",
         }
+      - {
+          label: Fin de l’extrait (en secondes),
+          name: extractEnd,
+          widget: number,
+          value_type: int,
+          min: 1,
+          required: false,
+          hint: "La lecture se met en pause à ce moment. Doit être après le début.",
+        }
       - { label: Image, name: image, widget: image, required: false }
       - {
           label: Texte alternatif de l’image,

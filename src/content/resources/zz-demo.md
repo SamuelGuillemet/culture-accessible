@@ -4,6 +4,7 @@ description: Une question de démonstration avec extrait audio.
 pubDate: 2026-11-02
 episode: zz-demo
 extractStart: 90
+extractEnd: 150
 draft: false
 ---
 

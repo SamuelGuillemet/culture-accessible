@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { entry, episode } = Astro.props;
-const { title, description, pubDate, extractStart, image, imageAlt } = entry.data;
+const { title, description, pubDate, extractStart, extractEnd, image, imageAlt } = entry.data;
 const { Content } = await render(entry);
 const imageUrl = withBaseForPublicMedia(image, import.meta.env.BASE_URL);
 const extractTitle = episode ? `${title} (extrait de ${episode.data.title})` : title;
@@ -51,6 +51,7 @@ const extractTitle = episode ? `${title} (extrait de ${episode.data.title})` : t
             id={episode.data.spotifyId}
             title={extractTitle}
             start={extractStart ?? 0}
+            end={extractEnd}
           />
         </section>
       )}
@@ -81,7 +82,8 @@ const extractTitle = episode ? `${title} (extrait de ${episode.data.title})` : t
           </h2>
           <p class="mt-3">
             {episode.data.title}
-            {extractStart ? `, à partir de ${formatTimestamp(extractStart)}.` : "."}
+            {extractStart ? `, à partir de ${formatTimestamp(extractStart)}` : ""}
+            {extractEnd ? ` jusqu’à ${formatTimestamp(extractEnd)}.` : "."}
           </p>
           <p class="m-0 mt-5">
             <a class="btn btn-primary" href={href(`podcasts/${episode.id}/`)}>
