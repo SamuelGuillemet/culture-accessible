@@ -5,6 +5,9 @@ description: Quelques repères pour présenter clairement les informations
 pubDate: 2026-10-28
 image: /images/uploads/capture-d-écran-2026-10-04-153403.png
 imageAlt: Blue prince
+extractStart: 90
+extractEnd: 150
+episode: falc-etape-3
 draft: false
 ---
 

@@ -1,0 +1,36 @@
+---
+import { parseYoutubeId } from "../lib/media";
+import ExternalLink from "./ExternalLink.astro";
+import SpotifyPlayer from "./SpotifyPlayer.astro";
+import YoutubePlayer from "./YoutubePlayer.astro";
+
+interface Props {
+  spotifyId?: string;
+  youtubeUrl?: string;
+  title: string;
+  /** Secondes. Pour un extrait, avec `end`. */
+  start?: number;
+  end?: number;
+  spotifyHeight?: 152 | 232;
+}
+
+const { spotifyId, youtubeUrl, title, start, end, spotifyHeight } = Astro.props;
+const youtubeId = youtubeUrl ? parseYoutubeId(youtubeUrl) : undefined;
+const youtubeLink = youtubeId
+  ? `https://www.youtube.com/watch?v=${youtubeId}${start ? `&t=${start}s` : ""}`
+  : undefined;
+---
+
+{(spotifyId || youtubeId) && (
+  <div class="grid gap-6">
+    {spotifyId && (
+      <SpotifyPlayer id={spotifyId} title={title} start={start} end={end} height={spotifyHeight} />
+    )}
+    {youtubeId && <YoutubePlayer videoId={youtubeId} title={title} start={start} />}
+    {youtubeLink && (
+      <p class="m-0">
+        <ExternalLink href={youtubeLink}>Ouvrir la vidéo sur YouTube</ExternalLink>
+      </p>
+    )}
+  </div>
+)}

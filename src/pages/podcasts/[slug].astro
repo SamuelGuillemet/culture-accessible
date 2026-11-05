@@ -1,11 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
+import MediaPlayer from "../../components/MediaPlayer.astro";
 import ResourceItem from "../../components/ResourceItem.astro";
-import SpotifyPlayer from "../../components/SpotifyPlayer.astro";
 import Waveform from "../../components/Waveform.astro";
-import YoutubePlayer from "../../components/YoutubePlayer.astro";
 import SiteLayout from "../../layouts/SiteLayout.astro";
-import { parseYoutubeId } from "../../lib/media";
 import { formatDate, href } from "../../lib/site";
 
 export async function getStaticPaths() {
@@ -23,7 +21,6 @@ export async function getStaticPaths() {
 const { entry, related } = Astro.props;
 const { title, description, pubDate, episodeNumber, spotifyId, youtubeUrl } = entry.data;
 const { Content } = await render(entry);
-const youtubeId = youtubeUrl ? parseYoutubeId(youtubeUrl) : undefined;
 const hasTranscript = Boolean(entry.body?.trim());
 ---
 
@@ -51,18 +48,7 @@ const hasTranscript = Boolean(entry.body?.trim());
         <h2 id="ecouter" class="m-0 mb-5 text-2xl sm:text-3xl">
           Écouter l’épisode
         </h2>
-        <div class="grid gap-6">
-          {spotifyId && <SpotifyPlayer id={spotifyId} title={title} height={232} />}
-          {youtubeId && <YoutubePlayer videoId={youtubeId} title={title} />}
-          {youtubeId && youtubeUrl && (
-            <p class="m-0">
-              <a href={youtubeUrl} target="_blank" rel="noopener noreferrer">
-                Ouvrir la vidéo sur YouTube
-                <span class="sr-only"> (s’ouvre dans un nouvel onglet)</span>
-              </a>
-            </p>
-          )}
-        </div>
+        <MediaPlayer {spotifyId} {youtubeUrl} title={title} spotifyHeight={232} />
       </section>
 
       <section aria-labelledby="transcription" class="max-w-3xl">

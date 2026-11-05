@@ -2,15 +2,19 @@
 interface Props {
   videoId: string;
   title: string;
+  start?: number;
 }
 
-const { videoId, title } = Astro.props;
+const { videoId, title, start = 0 } = Astro.props;
+const params = new URLSearchParams();
+if (start > 0) params.set("start", String(start));
+const query = params.size ? `?${params}` : "";
 ---
 
 <div class="aspect-video w-full overflow-hidden rounded-3xl border-2 border-black bg-black">
   <iframe
     class="h-full w-full border-0"
-    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+    src={`https://www.youtube-nocookie.com/embed/${videoId}${query}`}
     title={`Lecteur vidéo YouTube : ${title}`}
     loading="lazy"
     referrerpolicy="strict-origin-when-cross-origin"

@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import SpotifyPlayer from "../../components/SpotifyPlayer.astro";
+import MediaPlayer from "../../components/MediaPlayer.astro";
 import SiteLayout from "../../layouts/SiteLayout.astro";
 import { withBaseForPublicMedia } from "../../lib/public-media-url.js";
 import { formatDate, formatTimestamp, href } from "../../lib/site";
@@ -42,15 +42,16 @@ const extractTitle = episode ? `${title} (extrait de ${episode.data.title})` : t
     </header>
 
     <div class="mx-auto grid grid-cols-1 max-w-6xl gap-14 px-6 py-14">
-      {episode?.data.spotifyId && (
+      {(episode?.data.spotifyId || episode?.data.youtubeUrl) && (
         <section aria-labelledby="extrait" class="max-w-3xl">
           <h2 id="extrait" class="m-0 mb-5 text-2xl sm:text-3xl">
             L’extrait
           </h2>
-          <SpotifyPlayer
-            id={episode.data.spotifyId}
+          <MediaPlayer
+            spotifyId={episode.data.spotifyId}
+            youtubeUrl={episode.data.youtubeUrl}
             title={extractTitle}
-            start={extractStart ?? 0}
+            start={extractStart}
             end={extractEnd}
           />
         </section>
