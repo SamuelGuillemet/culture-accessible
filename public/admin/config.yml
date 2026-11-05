@@ -3,36 +3,138 @@ backend:
   turbo_site_id: 6765129d-663d-41ae-9740-abe4e31143fb
   branch: main
 
+locale: fr
+
 media_folder: public/images/uploads
 public_folder: /images/uploads
 
-collections:
-  - name: articles
-    label: Articles
-    label_singular: Article
-    folder: src/content/articles
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: Titre, name: title, widget: string }
-      - { label: Résumé, name: description, widget: text }
-      - { label: Date de publication, name: pubDate, widget: datetime }
-      - { label: Auteur, name: author, widget: string }
-      - { label: Image, name: image, widget: image, required: false }
-      - { label: Texte alternatif de l’image, name: imageAlt, widget: string, required: false }
-      - { label: Brouillon, name: draft, widget: boolean, default: true }
-      - { label: Corps, name: body, widget: markdown }
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: "-"
 
+collections:
   - name: episodes
-    label: Podcasts et vidéos
-    label_singular: Ressource audio ou vidéo
+    label: Épisodes
+    label_singular: Épisode
+    description: Chaque épisode apparaît sur la page Podcasts. Il faut au moins un lecteur, Spotify ou YouTube.
     folder: src/content/episodes
     create: true
     slug: "{{slug}}"
+    summary: "{{episodeNumber}} {{title}}"
+    sortable_fields: [pubDate, title, episodeNumber]
     fields:
-      - { label: Titre, name: title, widget: string }
-      - { label: Description, name: description, widget: text }
-      - { label: Date de publication, name: pubDate, widget: datetime }
-      - { label: URL YouTube, name: youtubeUrl, widget: string }
-      - { label: Brouillon, name: draft, widget: boolean, default: true }
-      - { label: Notes et transcription, name: body, widget: markdown }
+      - { label: Titre de l’épisode, name: title, widget: string }
+      - {
+          label: Numéro de l’épisode,
+          name: episodeNumber,
+          widget: number,
+          value_type: int,
+          min: 1,
+          required: false,
+        }
+      - {
+          label: Description courte,
+          name: description,
+          widget: text,
+          hint: "Deux ou trois phrases affichées sur la carte et sous le lecteur.",
+        }
+      - {
+          label: Date de publication,
+          name: pubDate,
+          widget: datetime,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+          format: "YYYY-MM-DD",
+        }
+      - label: Identifiant Spotify
+        name: spotifyId
+        widget: string
+        required: false
+        hint: "Dans Spotify : Partager, Copier le lien de l’épisode. Colle le lien entier ou seulement les 22 caractères après /episode/."
+      - {
+          label: Lien YouTube (vidéo sous-titrée),
+          name: youtubeUrl,
+          widget: string,
+          required: false,
+          hint: "Facultatif tant que la vidéo n’existe pas.",
+        }
+      - {
+          label: Brouillon,
+          name: draft,
+          widget: boolean,
+          default: true,
+          hint: "Décoche pour publier l’épisode sur le site.",
+        }
+      - {
+          label: Transcription,
+          name: body,
+          widget: markdown,
+          required: false,
+          hint: "Texte complet de l’épisode, pour les personnes qui ne peuvent pas écouter.",
+        }
+
+  - name: resources
+    label: Ressources
+    label_singular: Ressource
+    description: Une question soulevée dans un épisode, avec un extrait audio et une réponse écrite.
+    folder: src/content/resources
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}"
+    sortable_fields: [pubDate, title]
+    fields:
+      - {
+          label: Thématique,
+          name: title,
+          widget: string,
+          hint: "Le titre qui présente la question ou l’enjeu.",
+        }
+      - {
+          label: Résumé,
+          name: description,
+          widget: text,
+          hint: "Une ou deux phrases affichées dans la liste.",
+        }
+      - {
+          label: Date de publication,
+          name: pubDate,
+          widget: datetime,
+          date_format: "YYYY-MM-DD",
+          time_format: false,
+          format: "YYYY-MM-DD",
+        }
+      - label: Épisode d’origine
+        name: episode
+        widget: relation
+        collection: episodes
+        search_fields: [title]
+        value_field: "{{slug}}"
+        display_fields: [title]
+        required: false
+        hint: "Active l’extrait audio et le lien vers l’épisode complet."
+      - {
+          label: Début de l’extrait (en secondes),
+          name: extractStart,
+          widget: number,
+          value_type: int,
+          min: 0,
+          required: false,
+          hint: "Exemple : 1 min 30 s s’écrit 90.",
+        }
+      - { label: Image, name: image, widget: image, required: false }
+      - {
+          label: Texte alternatif de l’image,
+          name: imageAlt,
+          widget: string,
+          required: false,
+          hint: "Décris l’image en une phrase. Laisse vide si elle est purement décorative.",
+        }
+      - {
+          label: Brouillon,
+          name: draft,
+          widget: boolean,
+          default: true,
+          hint: "Décoche pour publier la ressource sur le site.",
+        }
+      - { label: Réponse, name: body, widget: markdown }
