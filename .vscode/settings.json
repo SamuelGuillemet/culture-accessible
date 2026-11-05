@@ -20,5 +20,8 @@
   },
   "[astro]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "chat.tools.terminal.terminalProfile.linux": {
+    "path": "/bin/bash"
   }
 }
