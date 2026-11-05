@@ -1,0 +1,62 @@
+---
+interface Props {
+  seed: string;
+  bars?: number;
+  barWidth?: number;
+  animated?: boolean;
+  class?: string;
+}
+
+const { seed, bars = 24, barWidth = 6, animated = false, class: className } = Astro.props;
+
+// Hauteurs déterministes: chaque épisode garde la même empreinte sonore.
+let state = 2166136261;
+for (const char of seed) state = Math.imul(state ^ char.charCodeAt(0), 16777619) >>> 0;
+const next = () => {
+  state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+  return state / 4294967296;
+};
+const heights = Array.from({ length: bars }, (_, i) => {
+  const envelope = Math.sin((Math.PI * (i + 0.5)) / bars);
+  return Math.round(8 + 80 * (0.25 + 0.75 * next()) * (0.45 + 0.55 * envelope));
+});
+---
+
+<svg
+  class:list={["waveform", animated && "waveform-animated", className]}
+  style={`--bar:${barWidth}px`}
+  viewBox={`0 0 ${bars * 10} 100`}
+  preserveAspectRatio="none"
+  aria-hidden="true"
+  focusable="false"
+>
+  {heights.map((h, i) => (
+    <line x1={i * 10 + 5} x2={i * 10 + 5} y1={50 - h / 2} y2={50 + h / 2} style={`--i:${i}`} />
+  ))}
+</svg>
+
+<style>
+  .waveform {
+    display: block;
+    overflow: visible;
+    stroke: currentColor;
+    stroke-width: var(--bar);
+    stroke-linecap: round;
+  }
+  .waveform line {
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .waveform-animated line {
+      animation: wave-in 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      animation-delay: calc(var(--i) * 28ms);
+    }
+  }
+  @keyframes wave-in {
+    from {
+      transform: scaleY(0.05);
+    }
+  }
+</style>

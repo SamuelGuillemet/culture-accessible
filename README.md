@@ -39,7 +39,30 @@ Le CMS est servi à `/culture-accessible/admin/` sur le site publié. Avant d’
 
 Les éditeurs se connectent avec leur compte Decap Turbo, pas leur compte GitHub. Turbo nécessite une place par éditeur ; l’offre gratuite commence avec une place. Les comptes éditeurs partagés compliquent l’attribution des modifications.
 
-Les articles et épisodes créés dans le CMS sont enregistrés dans `src/content/` et publiés sur le site au prochain déploiement GitHub Pages. Les entrées marquées comme brouillons restent absentes du site public.
+Les épisodes et ressources créés dans le CMS sont enregistrés dans `src/content/` et publiés sur le site au prochain déploiement GitHub Pages. Les entrées marquées comme brouillons restent absentes du site public.
+
+## Structure du site
+
+| Page                   | Contenu                                                                                |
+| ---------------------- | -------------------------------------------------------------------------------------- |
+| `/`                    | Présentation, derniers épisodes, dernières ressources                                  |
+| `/podcasts/`           | Cartes cliquables vers chaque épisode                                                  |
+| `/podcasts/<épisode>/` | Lecteur Spotify (audio), lecteur YouTube (vidéo), transcription, ressources liées      |
+| `/ressources/`         | Questions soulevées dans les épisodes                                                  |
+| `/ressources/<slug>/`  | Extrait audio démarrant à `extractStart` secondes, réponse écrite, lien vers l’épisode |
+| `/contact/`            | Google Form intégré, avec lien d’ouverture dans un nouvel onglet                       |
+
+Les liens (Instagram, plateformes d’écoute, formulaire) et le menu sont dans `src/lib/site.ts`.
+
+## Spotify
+
+Dans Decap, le champ **Identifiant Spotify** accepte le lien de partage complet (`https://open.spotify.com/episode/…`) ou les 22 caractères après `/episode/`. Le schéma Astro valide la valeur au build.
+
+Le lecteur (`src/components/SpotifyPlayer.astro`) utilise l’iFrame API de Spotify. Rien n’est téléchargé depuis Spotify avant le clic sur « Charger le lecteur ». Pour une ressource, l’extrait se positionne sur `extractStart` au premier lancement de la lecture. Un lien direct `?t=<secondes>` vers Spotify reste affiché en secours.
+
+## Police
+
+La charte demande Glacial Indifference. Tant que ses fichiers ne sont pas ajoutés, le site utilise Lexend, une police conçue pour la lisibilité. Pour passer à Glacial Indifference, déclare un `@font-face` dans `src/styles/global.css` avec des fichiers `.woff2` placés dans `src/assets/fonts/` : le nom `"Glacial Indifference"` est déjà en tête de la pile `--font-sans`.
 
 ## Widget d’accessibilité (essai)
 

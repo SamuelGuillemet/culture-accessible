@@ -1,0 +1,95 @@
+---
+import { getCollection, render } from "astro:content";
+import SpotifyPlayer from "../../components/SpotifyPlayer.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { withBaseForPublicMedia } from "../../lib/public-media-url.js";
+import { formatDate, formatTimestamp, href } from "../../lib/site";
+
+export async function getStaticPaths() {
+  const resources = await getCollection("resources", ({ data }) => !data.draft);
+  const episodes = await getCollection("episodes", ({ data }) => !data.draft);
+  return resources.map((entry) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      episode: episodes.find((episode) => episode.id === entry.data.episode?.id),
+    },
+  }));
+}
+
+const { entry, episode } = Astro.props;
+const { title, description, pubDate, extractStart, image, imageAlt } = entry.data;
+const { Content } = await render(entry);
+const imageUrl = withBaseForPublicMedia(image, import.meta.env.BASE_URL);
+const extractTitle = episode ? `${title} (extrait de ${episode.data.title})` : title;
+---
+
+<SiteLayout title={title} description={description}>
+  <article>
+    <header class="border-b-2 border-black bg-sky">
+      <div class="mx-auto max-w-6xl px-6 py-12 sm:py-16">
+        <p class="m-0">
+          <a class="font-semibold" href={href("ressources/")}>
+            Toutes les ressources
+          </a>
+        </p>
+        <h1 class="m-0 mt-6 max-w-4xl text-4xl sm:text-6xl">{title}</h1>
+        <p class="mt-5 max-w-2xl text-xl">{description}</p>
+        <p class="mt-5 text-base">
+          <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+        </p>
+      </div>
+    </header>
+
+    <div class="mx-auto grid max-w-6xl gap-14 px-6 py-14">
+      {episode?.data.spotifyId && (
+        <section aria-labelledby="extrait" class="max-w-3xl">
+          <h2 id="extrait" class="m-0 mb-5 text-2xl sm:text-3xl">
+            L’extrait
+          </h2>
+          <SpotifyPlayer
+            id={episode.data.spotifyId}
+            title={extractTitle}
+            start={extractStart ?? 0}
+          />
+        </section>
+      )}
+
+      <section aria-labelledby="reponse">
+        <h2 id="reponse" class="m-0 mb-5 text-2xl sm:text-3xl">
+          Notre réponse
+        </h2>
+        {imageUrl && (
+          <img
+            class="mb-8 max-w-xl rounded-2xl border-2 border-black"
+            src={imageUrl}
+            alt={imageAlt ?? ""}
+          />
+        )}
+        <div class="prose">
+          <Content />
+        </div>
+      </section>
+
+      {episode && (
+        <section
+          aria-labelledby="episode-complet"
+          class="max-w-3xl rounded-3xl border-2 border-black bg-white p-6 sm:p-8"
+        >
+          <h2 id="episode-complet" class="m-0 text-2xl sm:text-3xl">
+            Cet extrait vient d’un épisode
+          </h2>
+          <p class="mt-3">
+            {episode.data.title}
+            {extractStart ? `, à partir de ${formatTimestamp(extractStart)}.` : "."}
+          </p>
+          <p class="m-0 mt-5">
+            <a class="btn btn-primary" href={href(`podcasts/${episode.id}/`)}>
+              Découvrir l’épisode en entier
+            </a>
+          </p>
+        </section>
+      )}
+    </div>
+  </article>
+</SiteLayout>

@@ -1,45 +1,114 @@
 ---
+import "../styles/global.css";
+import ExternalLink from "../components/ExternalLink.astro";
+import Waveform from "../components/Waveform.astro";
+import { LINKS, NAV, SITE_NAME, href } from "../lib/site";
+
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
 }
 
-const { title, description = "Le site de l’association Culture accessible." } = Astro.props;
+const {
+  title,
+  description = "Culture accessible : le podcast qui rend la culture accessible à toutes et à tous.",
+} = Astro.props;
 
-import "../styles/global.css";
+const pageTitle = title ? `${title} — ${SITE_NAME}` : SITE_NAME;
+const currentPath = Astro.url.pathname;
+const isCurrent = (path: string) => {
+  const target = href(path);
+  return path === "" ? currentPath === target : currentPath.startsWith(target);
+};
 ---
 
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <title>{title} — Culture accessible</title>
+    <meta name="theme-color" content="#6b1fad" />
+    <title>{pageTitle}</title>
   </head>
-  <body class="mx-auto max-w-6xl px-6">
+  <body class="flex min-h-screen flex-col">
     <a
-      class="absolute left-2 top-2 translate-y-[-150%] bg-white px-4 py-2 focus:translate-y-0"
+      class="absolute left-3 top-3 z-50 -translate-y-24 rounded-full bg-black px-5 py-3 font-bold text-white focus:translate-y-0"
       href="#contenu"
     >
       Aller au contenu
     </a>
-    <header class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-400 py-4">
-      <a class="font-bold" href={import.meta.env.BASE_URL}>
-        Culture accessible
-      </a>
-      <nav class="flex flex-wrap gap-4" aria-label="Navigation principale">
-        <a href={import.meta.env.BASE_URL}>Accueil</a>
-        <a href={`${import.meta.env.BASE_URL}articles/`}>Articles</a>
-        <a href={`${import.meta.env.BASE_URL}podcasts/`}>Podcasts et vidéos</a>
-      </nav>
+
+    <header class="border-b-2 border-black bg-white">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-8 gap-y-3 px-6 py-4">
+        <a class="flex items-center gap-3 text-black no-underline" href={href()}>
+          <Waveform seed="culture-accessible" bars={6} barWidth={3} class="h-8 w-10 text-brand" />
+          <span class="text-xl font-bold tracking-tight">{SITE_NAME}</span>
+        </a>
+        <nav aria-label="Navigation principale">
+          <ul class="m-0 flex list-none flex-wrap gap-x-6 gap-y-1 p-0 font-semibold">
+            {NAV.map((item) => (
+              <li>
+                <a
+                  class:list={[
+                    "inline-block py-2 text-black no-underline decoration-brand decoration-4 underline-offset-8 hover:underline",
+                    isCurrent(item.path) && "underline",
+                  ]}
+                  href={href(item.path)}
+                  aria-current={isCurrent(item.path) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
     </header>
-    <main class="min-h-[60vh] py-12" id="contenu">
+
+    <main id="contenu" class="flex-1" tabindex="-1">
       <slot />
     </main>
-    <footer class="border-t border-slate-400 py-4">
-      <p>Culture accessible</p>
+
+    <footer class="on-dark border-t-2 border-black bg-brand-deep text-white">
+      <div class="mx-auto grid max-w-6xl gap-10 px-6 py-12 md:grid-cols-[1.2fr_1fr_1fr]">
+        <div>
+          <p class="m-0 flex items-center gap-3 text-xl font-bold">
+            <Waveform seed="culture-accessible" bars={6} barWidth={3} class="h-8 w-10 text-sky" />
+            {SITE_NAME}
+          </p>
+          <p class="mt-3 max-w-xs text-base">Le podcast qui ouvre la culture à toutes et à tous.</p>
+        </div>
+        <nav aria-label="Navigation du pied de page">
+          <p class="m-0 text-xl font-bold">Le site</p>
+          <ul class="m-0 mt-3 list-none space-y-1 p-0">
+            {NAV.map((item) => (
+              <li>
+                <a class="inline-block py-1 text-white" href={href(item.path)}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <div>
+          <p class="m-0 text-xl font-bold">Nous suivre</p>
+          <ul class="m-0 mt-3 list-none space-y-1 p-0">
+            <li>
+              <ExternalLink class="inline-block py-1 text-white" href={LINKS.listen}>
+                Plateformes d’écoute
+              </ExternalLink>
+            </li>
+            <li>
+              <ExternalLink class="inline-block py-1 text-white" href={LINKS.instagram}>
+                Instagram
+              </ExternalLink>
+            </li>
+          </ul>
+        </div>
+      </div>
     </footer>
+
     <script is:inline>
       if (!localStorage.getItem("accessibilityWidgetLanguage")) {
         localStorage.setItem("accessibilityWidgetLanguage", "fr");

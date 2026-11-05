@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate, href } from "../lib/site";
+
+interface Props {
+  resource: CollectionEntry<"resources">;
+  headingLevel?: "h2" | "h3";
+}
+
+const { resource, headingLevel: Heading = "h3" } = Astro.props;
+const { title, description, pubDate, episode } = resource.data;
+---
+
+<article class="relative grid gap-x-8 gap-y-2 border-t-2 border-black py-6 has-[a:focus-visible]:outline-3 has-[a:focus-visible]:outline-offset-4 hover:bg-white/60 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
+  <Heading class="m-0 text-2xl sm:text-3xl">
+    <a
+      class="text-black no-underline after:absolute after:inset-0 after:content-[''] focus-visible:shadow-none focus-visible:outline-0"
+      href={href(`ressources/${resource.id}/`)}
+    >
+      {title}
+    </a>
+  </Heading>
+  <div>
+    <p class="m-0">{description}</p>
+    <p class="m-0 mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-base">
+      <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+      {episode && (
+        <span class="rounded-md border-2 border-black px-2 font-bold">Extrait audio</span>
+      )}
+    </p>
+  </div>
+</article>

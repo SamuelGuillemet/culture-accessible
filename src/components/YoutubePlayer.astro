@@ -1,0 +1,19 @@
+---
+interface Props {
+  videoId: string;
+  title: string;
+}
+
+const { videoId, title } = Astro.props;
+---
+
+<div class="aspect-video w-full overflow-hidden rounded-3xl border-2 border-black bg-black">
+  <iframe
+    class="h-full w-full border-0"
+    src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+    title={`Lecteur vidéo YouTube : ${title}`}
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="encrypted-media; fullscreen; picture-in-picture; web-share"
+  ></iframe>
+</div>

@@ -1,0 +1,124 @@
+---
+import { formatTimestamp } from "../lib/site";
+import ExternalLink from "./ExternalLink.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  start?: number;
+  height?: 152 | 232;
+}
+
+const { id, title, start = 0, height = 152 } = Astro.props;
+const intro =
+  start > 0
+    ? `Extrait audio, à partir de ${formatTimestamp(start)}.`
+    : "Version audio de l’épisode.";
+const openUrl = `https://open.spotify.com/episode/${id}${start > 0 ? `?t=${start}` : ""}`;
+---
+
+<div
+  class="spotify-player rounded-3xl border-2 border-black bg-white p-5 sm:p-6"
+  data-spotify-player
+  data-spotify-id={id}
+  data-spotify-start={start}
+  data-spotify-title={title}
+  data-spotify-height={height}
+>
+  <div data-spotify-placeholder>
+    <p class="mt-0 max-w-prose">
+      {intro} Le lecteur est fourni par Spotify. Il se charge quand vous le demandez.
+    </p>
+    <button type="button" class="btn btn-primary" data-spotify-load>
+      Charger le lecteur
+      <span class="sr-only"> Spotify : {title}</span>
+    </button>
+  </div>
+  <div data-spotify-mount></div>
+  <p class="mb-0 mt-4" role="status" data-spotify-status></p>
+  <p class="mb-0 mt-3 text-sm">
+    <ExternalLink href={openUrl}>
+      {start > 0 ? `Écouter l’extrait sur Spotify` : "Écouter l’épisode sur Spotify"}
+    </ExternalLink>
+  </p>
+</div>
+
+<script>
+  type Controller = {
+    addListener(event: string, callback: () => void): void;
+    seek(seconds: number): void;
+  };
+  type SpotifyApi = {
+    createController(
+      element: HTMLElement,
+      options: { uri: string; width: string; height: number },
+      callback: (controller: Controller) => void,
+    ): void;
+  };
+
+  const host = window as unknown as { onSpotifyIframeApiReady?: (api: SpotifyApi) => void };
+  let apiPromise: Promise<SpotifyApi> | undefined;
+
+  // L'API n'est téléchargée qu'au premier clic.
+  const loadApi = () =>
+    (apiPromise ??= new Promise<SpotifyApi>((resolve, reject) => {
+      host.onSpotifyIframeApiReady = resolve;
+      const script = document.createElement("script");
+      script.src = "https://open.spotify.com/embed/iframe-api/v1";
+      script.async = true;
+      script.onerror = () => {
+        apiPromise = undefined;
+        reject(new Error("Spotify iFrame API unavailable"));
+      };
+      document.head.append(script);
+    }));
+
+  for (const root of document.querySelectorAll<HTMLElement>("[data-spotify-player]")) {
+    const button = root.querySelector<HTMLButtonElement>("[data-spotify-load]");
+    const placeholder = root.querySelector<HTMLElement>("[data-spotify-placeholder]");
+    const mount = root.querySelector<HTMLElement>("[data-spotify-mount]");
+    const status = root.querySelector<HTMLElement>("[data-spotify-status]");
+    if (!button || !placeholder || !mount || !status) continue;
+
+    button.addEventListener("click", async () => {
+      button.disabled = true;
+      status.textContent = "Chargement du lecteur Spotify…";
+
+      try {
+        const api = await loadApi();
+        const { spotifyId, spotifyStart, spotifyTitle, spotifyHeight } = root.dataset;
+        const startAt = Number(spotifyStart) || 0;
+
+        placeholder.hidden = true;
+        api.createController(
+          mount,
+          {
+            uri: `spotify:episode:${spotifyId}`,
+            width: "100%",
+            height: Number(spotifyHeight) || 152,
+          },
+          (controller) => {
+            if (startAt > 0) {
+              let positioned = false;
+              controller.addListener("playback_started", () => {
+                if (positioned) return;
+                positioned = true;
+                controller.seek(startAt);
+              });
+            }
+            const iframe = root.querySelector("iframe");
+            if (iframe) {
+              iframe.title = `Lecteur Spotify : ${spotifyTitle}`;
+              iframe.focus();
+            }
+            status.textContent = "Lecteur Spotify chargé. Utilisez le bouton lecture.";
+          },
+        );
+      } catch {
+        button.disabled = false;
+        status.textContent =
+          "Le lecteur n’a pas pu se charger. Utilisez le lien ci-dessous pour écouter sur Spotify.";
+      }
+    });
+  }
+</script>

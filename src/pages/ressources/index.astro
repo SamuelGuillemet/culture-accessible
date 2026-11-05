@@ -1,0 +1,36 @@
+---
+import { getCollection } from "astro:content";
+import ResourceItem from "../../components/ResourceItem.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const resources = (await getCollection("resources", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<SiteLayout
+  title="Ressources"
+  description="Des questions soulevées dans nos épisodes, avec un extrait audio et une réponse écrite."
+>
+  <section class="border-b-2 border-black bg-sky">
+    <div class="mx-auto max-w-6xl px-6 py-14 sm:py-20">
+      <h1 class="m-0 text-4xl sm:text-6xl">Ressources</h1>
+      <p class="mt-5 max-w-2xl text-xl">
+        Un passage d’épisode soulève une question ou un enjeu. Écoutez l’extrait, puis lisez notre
+        réponse.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-16" aria-label="Liste des ressources">
+    {resources.length ? (
+      <div class="border-b-2 border-black">
+        {resources.map((resource) => (
+          <ResourceItem resource={resource} headingLevel="h2" />
+        ))}
+      </div>
+    ) : (
+      <p>Aucune ressource n’est publiée pour le moment. Revenez bientôt.</p>
+    )}
+  </section>
+</SiteLayout>

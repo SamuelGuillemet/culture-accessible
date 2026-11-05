@@ -1,53 +1,99 @@
 ---
 import { getCollection } from "astro:content";
+import EpisodeCard from "../components/EpisodeCard.astro";
+import ResourceItem from "../components/ResourceItem.astro";
+import Waveform from "../components/Waveform.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
+import { href } from "../lib/site";
 
-const articles = (await getCollection("articles", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+const byDateDesc = <T extends { data: { pubDate: Date } }>(a: T, b: T) =>
+  b.data.pubDate.valueOf() - a.data.pubDate.valueOf();
+
 const episodes = (await getCollection("episodes", ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .sort(byDateDesc)
+  .slice(0, 3);
+const resources = (await getCollection("resources", ({ data }) => !data.draft))
+  .sort(byDateDesc)
   .slice(0, 3);
 ---
 
 <SiteLayout title="Accueil">
-  <h1>Culture accessible</h1>
-  <p>Le site de l’association est en préparation.</p>
-  <p>Merci de votre patience.</p>
-
-  <section class="mt-10" aria-labelledby="articles-recents">
-    <h2 id="articles-recents">Derniers articles</h2>
-    {articles.length ? (
-      <ul class="list-none space-y-4 p-0">
-        {articles.map((article) => (
-          <li>
-            <a class="font-semibold" href={`${import.meta.env.BASE_URL}articles/${article.id}/`}>
-              {article.data.title}
-            </a>
-            <p>{article.data.description}</p>
-          </li>
-        ))}
-      </ul>
-    ) : (
-      <p>Aucun article publié pour le moment.</p>
-    )}
+  <section class="on-dark overflow-hidden bg-brand text-white" aria-labelledby="titre-accueil">
+    <div class="mx-auto max-w-6xl px-6 pb-10 pt-16 sm:pt-24">
+      <h1 id="titre-accueil" class="m-0 max-w-4xl text-5xl sm:text-7xl">
+        La culture est faite pour tout le monde.
+      </h1>
+      <p class="mt-6 max-w-2xl text-xl">
+        Culture accessible est un podcast sur l’accessibilité des lieux, des œuvres et des
+        événements culturels. Chaque épisode donne la parole aux personnes qui la vivent et la
+        construisent.
+      </p>
+      <p class="mt-8 flex flex-wrap gap-4">
+        <a class="btn btn-light" href={href("contact/")}>
+          Proposer un sujet ou participer
+        </a>
+        <a
+          class="btn border-white bg-transparent text-white"
+          style="box-shadow: 0.25rem 0.25rem 0 #000"
+          href={href("podcasts/")}
+        >
+          Écouter les épisodes
+        </a>
+      </p>
+    </div>
+    <Waveform
+      seed="accueil"
+      bars={64}
+      barWidth={10}
+      animated
+      class="h-24 w-full text-sky sm:h-32"
+    />
   </section>
 
-  <section class="mt-10" aria-labelledby="derniers-podcasts">
-    <h2 id="derniers-podcasts">Derniers podcasts et vidéos</h2>
+  <section class="mx-auto max-w-6xl px-6 py-20" aria-labelledby="derniers-episodes">
+    <h2 id="derniers-episodes" class="m-0 text-3xl sm:text-4xl">
+      Les derniers épisodes
+    </h2>
     {episodes.length ? (
-      <ul class="list-none space-y-4 p-0">
+      <ul class="m-0 mt-10 grid list-none gap-8 p-0 md:grid-cols-2 lg:grid-cols-3">
         {episodes.map((episode) => (
           <li>
-            <a class="font-semibold" href={`${import.meta.env.BASE_URL}podcasts/${episode.id}/`}>
-              {episode.data.title}
-            </a>
-            <p>{episode.data.description}</p>
+            <EpisodeCard episode={episode} />
           </li>
         ))}
       </ul>
     ) : (
-      <p>Aucun podcast publié pour le moment.</p>
+      <p class="mt-6">Les premiers épisodes arrivent bientôt.</p>
     )}
+    <p class="mt-10">
+      <a class="btn btn-primary" href={href("podcasts/")}>
+        Voir tous les épisodes
+      </a>
+    </p>
+  </section>
+
+  <section class="border-y-2 border-black bg-sky" aria-labelledby="vos-questions">
+    <div class="mx-auto max-w-6xl px-6 py-20">
+      <h2 id="vos-questions" class="m-0 text-3xl sm:text-4xl">
+        On répond à vos questions
+      </h2>
+      <p class="mt-4 max-w-2xl">
+        Un passage d’épisode soulève un enjeu ? Nous l’isolons, puis nous y répondons par écrit.
+      </p>
+      {resources.length ? (
+        <div class="mt-10 border-b-2 border-black">
+          {resources.map((resource) => (
+            <ResourceItem resource={resource} />
+          ))}
+        </div>
+      ) : (
+        <p class="mt-6">Les premières réponses arrivent bientôt.</p>
+      )}
+      <p class="mt-10">
+        <a class="btn btn-primary" href={href("ressources/")}>
+          Découvrir les ressources
+        </a>
+      </p>
+    </div>
   </section>
 </SiteLayout>
