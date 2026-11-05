@@ -1,14 +1,27 @@
 @import "tailwindcss";
 @import "@fontsource-variable/lexend";
 
+@font-face {
+  font-family: "Bristol";
+  src: url("../assets/fonts/Bristol.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Glacial Indifference";
+  src: url("../assets/fonts/GlacialIndifference-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+
 @theme {
   --color-brand: #6b1fad;
   --color-brand-deep: #2e0b4d;
   --color-sky: #c2dcff;
   --color-mist: #f3f8ff;
 
-  /* Glacial Indifference est la police de la charte ; Lexend sert de relais lisible tant que ses fichiers ne sont pas ajoutés. */
   --font-sans: "Glacial Indifference", "Lexend Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Bristol", "Lexend Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -23,7 +36,7 @@
   h1,
   h2,
   h3 {
-    @apply font-bold leading-tight tracking-tight text-balance;
+    @apply font-heading font-normal leading-tight tracking-tight text-balance uppercase;
   }
 
   a {
