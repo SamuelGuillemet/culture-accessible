@@ -6,7 +6,7 @@ description: Ce premier épisode propose une entrée en matière dans le monde d
   l’accessibilité.
 pubDate: 2026-06-12
 spotifyId: 0pjErcJuS0TjNHAF3lWHN2
-draft: true
+draft: false
 ---
 Florine Waultier travaille au sein de l’association Culture Relax qui accompagne les structures culturelles vers un meilleur accueil des personnes avec handicap complexe.
 
