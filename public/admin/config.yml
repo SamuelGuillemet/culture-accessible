@@ -14,6 +14,27 @@ slug:
   sanitize_replacement: "-"
 
 collections:
+  - name: pages
+    label: Pages
+    files:
+      - name: ressources-culturelles
+        label: Ressources culturelles
+        file: src/content/pages/ressources-culturelles.md
+        fields:
+          - { label: Titre, name: title, widget: string }
+          - {
+              label: Introduction,
+              name: description,
+              widget: text,
+              hint: "Phrase affichée sous le titre de la page.",
+            }
+          - {
+              label: Contenu,
+              name: body,
+              widget: markdown,
+              hint: "Titres de niveau 2 pour les rubriques (À lire…), niveau 3 pour les sous-rubriques.",
+            }
+
   - name: episodes
     label: Épisodes
     label_singular: Épisode

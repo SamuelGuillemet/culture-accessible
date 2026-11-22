@@ -52,4 +52,9 @@ const resources = defineCollection({
     }),
 });
 
-export const collections = { episodes, resources };
+const pages = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/pages" }),
+  schema: z.object({ title: z.string(), description: z.string() }),
+});
+
+export const collections = { episodes, resources, pages };

@@ -1,0 +1,64 @@
+---
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const members = [
+  { name: "Yma", role: "Co-créatrice, hôte et référente accessibilité" },
+  { name: "Lucie", role: "Chargée de communication et site web accessible" },
+  { name: "Annette", role: "Journalisme audiovisuel" },
+];
+---
+
+<SiteLayout title="Équipe" description="L’équipe de Culture Accessible et notre positionnement.">
+  <section class="border-b-2 border-black bg-sky">
+    <div class="mx-auto max-w-6xl px-6 py-14 sm:py-20">
+      <h1 class="m-0 text-4xl sm:text-6xl">Équipe</h1>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-14" aria-labelledby="trio">
+    <h2 id="trio" class="m-0 text-2xl sm:text-3xl">
+      Le trio
+    </h2>
+    <ul class="m-0 mt-8 grid list-none gap-6 p-0 md:grid-cols-3">
+      {members.map((member) => (
+        <li class="rounded-3xl border-2 border-black bg-white p-6">
+          <h3 class="m-0 text-2xl">{member.name}</h3>
+          <p class="mt-2">{member.role}</p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 pb-14" aria-labelledby="positionnement">
+    <div class="prose">
+      <h2 id="positionnement" class="mt-0">
+        Positionnement
+      </h2>
+      <p>
+        Nous sommes trois femmes blanches, non handies. Notre objectif n’est pas de parler à la
+        place des personnes concernées, mais d’assumer nos responsabilités en tant que
+        professionnelles de la culture et du monde médiatique, trop souvent confrontées à des
+        situations d’inaccessibilité.
+      </p>
+      <p>
+        Notre trio se complète : Yma travaille depuis plusieurs années dans des structures
+        culturelles à Paris et à Lille après ses études à Sciences Po Lille. Lucie a suivi la même
+        formation, puis a connu des expériences diversifiées en communication dans le milieu
+        culturel, médiatique et institutionnel. Annette se forme à l’École Supérieure de Journalisme
+        de Lille pour devenir journaliste audiovisuelle.
+      </p>
+      <p>
+        Nous invitons ainsi en priorité des personnes directement concernées par le handicap, ou des
+        professionnel·les dont la démarche suit le mantra « rien pour nous sans nous » et inclut les
+        personnes concernées.
+      </p>
+      <p>
+        La charge mentale des personnes handies fait partie des sujets qui nous ont intéressées dans
+        la construction de ce projet. Sans parler à leur place, nous mettons en œuvre les conditions
+        d’un dialogue : nous posons des questions, nous ouvrons des pistes et, surtout, nous
+        rassemblons l’information disponible de manière claire et facile d’accès sur notre site web
+        pour faciliter l’accès au savoir sur la question.
+      </p>
+    </div>
+  </section>
+</SiteLayout>

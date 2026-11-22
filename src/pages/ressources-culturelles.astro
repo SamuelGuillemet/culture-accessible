@@ -1,0 +1,22 @@
+---
+import { getEntry, render } from "astro:content";
+import SiteLayout from "../layouts/SiteLayout.astro";
+
+const entry = (await getEntry("pages", "ressources-culturelles"))!;
+const { Content } = await render(entry);
+---
+
+<SiteLayout title={entry.data.title} description={entry.data.description}>
+  <section class="border-b-2 border-black bg-sky">
+    <div class="mx-auto max-w-6xl px-6 py-14 sm:py-20">
+      <h1 class="m-0 text-4xl sm:text-6xl">{entry.data.title}</h1>
+      <p class="mt-5 max-w-2xl text-xl">{entry.data.description}</p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-6 py-14">
+    <div class="prose">
+      <Content />
+    </div>
+  </section>
+</SiteLayout>
