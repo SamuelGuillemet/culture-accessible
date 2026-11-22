@@ -44,7 +44,7 @@ jobs:
 
       - name: Build
         env:
-          VITE_BASE_URL: /${{ github.event.repository.name }}/
+          VITE_BASE_URL: /
         run: pnpm build
 
       - name: Setup Pages
