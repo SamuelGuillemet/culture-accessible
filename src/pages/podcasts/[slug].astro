@@ -5,7 +5,7 @@ import MediaPlayer from "../../components/MediaPlayer.astro";
 import ResourceItem from "../../components/ResourceItem.astro";
 import Waveform from "../../components/Waveform.astro";
 import SiteLayout from "../../layouts/SiteLayout.astro";
-import { formatDate, href } from "../../lib/site";
+import { SITE_NAME, formatDate, href } from "../../lib/site";
 
 export async function getStaticPaths() {
   const episodes = await getCollection("episodes", ({ data }) => !data.draft);
@@ -26,7 +26,24 @@ const { Content } = await render(entry);
 const hasTranscript = Boolean(entry.body?.trim());
 ---
 
-<SiteLayout title={title} description={description}>
+<SiteLayout
+  title={title}
+  description={description}
+  jsonLd={{
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    name: title,
+    description,
+    datePublished: pubDate.toISOString(),
+    episodeNumber,
+    url: new URL(href(`podcasts/${entry.id}/`), Astro.site).href,
+    partOfSeries: {
+      "@type": "PodcastSeries",
+      name: SITE_NAME,
+      url: new URL(href(), Astro.site).href,
+    },
+  }}
+>
   <article>
     <header class="border-b-2 border-black bg-sky text-brand">
       <div class="mx-auto max-w-6xl px-6 pb-6 pt-12">

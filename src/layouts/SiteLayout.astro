@@ -6,14 +6,27 @@ import { LINKS, NAV, SITE_NAME, href } from "../lib/site";
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>;
 }
 
 const {
   title,
-  description = "Culture Accessible : le podcast qui rend la culture accessible à toutes et à tous.",
+  description = "Culture Accessible est un podcast consacré aux questions d’accessibilité dans le milieu culturel.",
+  noindex = false,
+  jsonLd,
 } = Astro.props;
 
 const pageTitle = title ? `${title} - ${SITE_NAME}` : SITE_NAME;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const socialImage = new URL(href("logo.png"), Astro.site).href;
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_NAME,
+  url: new URL(href(), Astro.site).href,
+  inLanguage: "fr-FR",
+};
 const currentPath = Astro.url.pathname;
 const isCurrent = (path: string) => {
   const target = href(path);
@@ -30,6 +43,18 @@ const isCurrent = (path: string) => {
     <meta name="theme-color" content="#6b1fad" />
     <link rel="icon" type="image/png" href={href("favicon.png")} />
     <title>{pageTitle}</title>
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body class="flex min-h-screen flex-col">
     <a
