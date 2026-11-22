@@ -81,6 +81,13 @@ collections:
           hint: "Facultatif tant que la vidéo n’existe pas.",
         }
       - {
+          label: Lien Instagram (post ou reel),
+          name: instagramUrl,
+          widget: string,
+          required: false,
+          hint: "Dans Instagram : ··· puis Copier le lien. La vidéo s’affiche sous le lecteur.",
+        }
+      - {
           label: Brouillon,
           name: draft,
           widget: boolean,

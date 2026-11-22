@@ -1,0 +1,44 @@
+---
+import { parseInstagramPermalink } from "../lib/media";
+import ExternalLink from "./ExternalLink.astro";
+
+interface Props {
+  url: string;
+}
+
+const permalink = parseInstagramPermalink(Astro.props.url);
+---
+
+{permalink && (
+  <div class="grid max-w-lg gap-6">
+    <div class="instagram-frame overflow-hidden rounded-3xl border-2 border-black bg-white">
+      <blockquote
+        class="instagram-media m-0 w-full p-4"
+        data-instgrm-captioned
+        data-instgrm-permalink={permalink}
+        data-instgrm-version="14"
+      >
+        <a href={permalink} target="_blank" rel="noopener noreferrer">
+          Voir la vidéo sur Instagram (nouvel onglet)
+        </a>
+      </blockquote>
+    </div>
+    <p class="m-0">
+      <ExternalLink href={permalink}>Ouvrir la vidéo sur Instagram</ExternalLink>
+    </p>
+    <script is:inline async src="https://www.instagram.com/embed.js"></script>
+  </div>
+)}
+
+<style is:global>
+  /* embed.js impose ces styles en ligne sur l'iframe ; le cadre du site les remplace. */
+  .instagram-frame iframe.instagram-media {
+    margin: 0 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+</style>

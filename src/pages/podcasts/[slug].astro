@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
+import InstagramEmbed from "../../components/InstagramEmbed.astro";
 import MediaPlayer from "../../components/MediaPlayer.astro";
 import ResourceItem from "../../components/ResourceItem.astro";
 import Waveform from "../../components/Waveform.astro";
@@ -19,7 +20,8 @@ export async function getStaticPaths() {
 }
 
 const { entry, related } = Astro.props;
-const { title, description, pubDate, episodeNumber, spotifyId, youtubeUrl } = entry.data;
+const { title, description, pubDate, episodeNumber, spotifyId, youtubeUrl, instagramUrl } =
+  entry.data;
 const { Content } = await render(entry);
 const hasTranscript = Boolean(entry.body?.trim());
 ---
@@ -63,6 +65,15 @@ const hasTranscript = Boolean(entry.body?.trim());
           <p class="m-0">La transcription de cet épisode n’est pas encore disponible.</p>
         )}
       </section>
+
+      {instagramUrl && (
+        <section aria-labelledby="instagram" class="max-w-4xl">
+          <h2 id="instagram" class="m-0 mb-5 text-2xl sm:text-3xl">
+            Extrait vidéo
+          </h2>
+          <InstagramEmbed url={instagramUrl} />
+        </section>
+      )}
 
       {related.length > 0 && (
         <section aria-labelledby="ressources-liees">
