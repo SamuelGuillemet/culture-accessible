@@ -5,8 +5,8 @@ description: "Disability Studies, culture crip et lutte contre le validisme : po
 
 ## À écouter
 
-- Conpassion – Podcast de Chiara Kahn.
-- Défaire le validisme : théories, expériences et pistes de réflexion – Podcast de TRAM. [Écouter sur YouTube](https://www.youtube.com/watch?v=u_nljXuFYcY)
+- Conpassion - Podcast de Chiara Kahn.
+- Défaire le validisme : théories, expériences et pistes de réflexion - Podcast de TRAM. [Écouter sur YouTube](https://www.youtube.com/watch?v=u_nljXuFYcY)
 
 ## À lire
 
@@ -21,7 +21,7 @@ description: "Disability Studies, culture crip et lutte contre le validisme : po
 ### Articles et textes en ligne
 
 - Chienne à punks. « Pourquoi faut-il lutter contre les ESAT ? » [Consulter le document](https://drive.google.com/file/d/1lpfnK1v612ESifBCyZCodc0ykKTPu_U1/view?usp=sharing)
-- Hénocque, Audrey. « Le handicap – un mal-pensé des politiques publiques ». [Lire l’article sur le site du CLHEE](https://clhee.org/2023/02/05/le-handicap-un-mal-pense-des-politiques-publiques/)
+- Hénocque, Audrey. « Le handicap - un mal-pensé des politiques publiques ». [Lire l’article sur le site du CLHEE](https://clhee.org/2023/02/05/le-handicap-un-mal-pense-des-politiques-publiques/)
 - Lazard, Carolyn (2019). Accessibility in the Arts: A Promise and a Practice. New York : Recess. [Consulter le document PDF](https://promiseandpractice.art/static/Accessibility_in_the_Arts_A_Promise_and_a_Practice_Carolyn_Lazard-e40d9ec67e82e5b3462ea6063c473c76.pdf)
 - Le Crip Amphibie. « Danser avec ou sans fauteuil roulant, aller bien, aller mieux » (2024). [Lire l’article](https://cripamphibie.wordpress.com/2024/02/17/danser-avec-ou-sans-fauteuil-roulant-aller-bien-aller-mieux/)
 - Puiseux, Charlotte. « Introduction à la théorie crip ». [Consulter le texte](https://charlottepuiseux.weebly.com/introcrip.html)
@@ -33,9 +33,9 @@ description: "Disability Studies, culture crip et lutte contre le validisme : po
 ## À voir
 
 - Crip Camp. Documentaire.
-- L’Art de la Joie Handie contre l’Hégémonie Culturelle Valide – Conférence gesticulée d’Alexandre. [Voir la conférence sur YouTube](https://www.youtube.com/watch?v=hvI2nXRxuoM)
-- Ce que les corps déviants nous enseignent – Conférence gesticulée de Mathilde François pour TRAM. [Voir la conférence sur YouTube](https://www.youtube.com/watch?v=3k9isA0uu08)
-- Un mètre vingt – Série de María Belén Poncio et Rosario Perazolo Masjoan.
+- L’Art de la Joie Handie contre l’Hégémonie Culturelle Valide - Conférence gesticulée d’Alexandre. [Voir la conférence sur YouTube](https://www.youtube.com/watch?v=hvI2nXRxuoM)
+- Ce que les corps déviants nous enseignent - Conférence gesticulée de Mathilde François pour TRAM. [Voir la conférence sur YouTube](https://www.youtube.com/watch?v=3k9isA0uu08)
+- Un mètre vingt - Série de María Belén Poncio et Rosario Perazolo Masjoan.
 
 ## Lieux à découvrir
 
