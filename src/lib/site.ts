@@ -15,7 +15,6 @@ export const NAV = [
   { label: "Ressources", path: "ressources/" },
   { label: "Ressources culturelles", path: "ressources-culturelles/" },
   { label: "À propos", path: "a-propos/" },
-  { label: "Équipe", path: "equipe/" },
   { label: "Contact", path: "contact/" },
 ] as const;
 
