@@ -37,3 +37,17 @@ export function parseYoutubeId(value: string): string | undefined {
 
   return id && YOUTUBE_ID.test(id) ? id : undefined;
 }
+
+/** Renvoie le permalien d’un post ou reel Instagram, ou undefined si le lien est invalide. */
+export function parseInstagramPermalink(value: string): string | undefined {
+  try {
+    const url = new URL(value.trim());
+    if (url.hostname.replace(/^www\./, "") !== "instagram.com") return undefined;
+    const match = url.pathname.match(/^\/(?:[\w.]+\/)?(reel|reels|p|tv)\/([\w-]+)/);
+    if (!match) return undefined;
+    const kind = match[1] === "reels" ? "reel" : match[1];
+    return `https://www.instagram.com/${kind}/${match[2]}/`;
+  } catch {
+    return undefined;
+  }
+}
