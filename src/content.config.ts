@@ -1,7 +1,7 @@
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection, reference } from "astro:content";
-import { parseSpotifyId, parseYoutubeId } from "./lib/media";
+import { parseInstagramPermalink, parseSpotifyId, parseYoutubeId } from "./lib/media";
 
 const optionalText = z
   .string()
@@ -24,6 +24,9 @@ const episodes = defineCollection({
         .transform((value) => (value ? parseSpotifyId(value) : undefined)),
       youtubeUrl: optionalText.refine((value) => !value || parseYoutubeId(value), {
         message: "Lien YouTube invalide.",
+      }),
+      instagramUrl: optionalText.refine((value) => !value || parseInstagramPermalink(value), {
+        message: "Lien Instagram invalide : colle le lien d’un post ou d’un reel.",
       }),
       draft: z.boolean().default(true),
     })

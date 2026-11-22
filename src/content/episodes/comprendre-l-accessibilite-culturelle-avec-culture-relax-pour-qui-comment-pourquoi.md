@@ -6,8 +6,10 @@ description: Ce premier épisode propose une entrée en matière dans le monde d
   l’accessibilité.
 pubDate: 2026-06-12
 spotifyId: 0pjErcJuS0TjNHAF3lWHN2
+instagramUrl: https://www.instagram.com/reel/DZ4xYYWqThL/?utm_source=ig_web_copy_link&bqrl=MzRlODBiNWFlZA==&avpt=MzRlODBiNWFlZA==
 draft: false
 ---
+
 Florine Waultier travaille au sein de l’association Culture Relax qui accompagne les structures culturelles vers un meilleur accueil des personnes avec handicap complexe.
 
 Elle nous explique ce que recouvre le terme « accessibilité », en présente le cadre juridique, définit la notion de handicap complexe, précise les termes à utiliser lorsqu'on parle du handicap, donne des pistes pour se lancer en tant que structure culturelle, explique comment toucher de nouveaux publics concernés par le handicap et souligne l'importance de l'accès aux droits culturels.
